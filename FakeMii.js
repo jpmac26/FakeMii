@@ -2,21 +2,22 @@ var http = require('http');
 //var request = require('request');
 var fs   = require('fs');
 var url  = require('url');
+var port = process.env.PORT || '3000';
 
 http.createServer(function (client_req, response) {
   console.log('serving: ' + client_req.url);
   if(client_req.url == "http://conntest.nintendowifi.net/")
-	sendConnTestPage(response);
-  else if(client_req.url.indexOf("launcher"))
-  {
-	  sendLauncherPage(response);
-  }
+    sendConnTestPage(response);
+  //else if(client_req.url.indexOf("launcher"))
+  //{
+  //  sendLauncherPage(response);
+  //}
   else
   {
-	  send404(response);
+    send404(response);
   }
-}).listen(3000);
-console.log('Server running on port 3000');
+}).listen(port);
+console.log('Server running on port ' + port);
 
 
 function sendLauncherPage(response){
