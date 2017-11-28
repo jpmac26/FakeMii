@@ -1,51 +1,39 @@
-var http = require('http');
-//var request = require('request');
-var fs   = require('fs');
-var url  = require('url');
-var port = process.env.PORT || '3000';
+const http = require('http');
+const fs   = require('fs');
+const url  = require('url');
 
-http.createServer(function (client_req, response) {
-  console.log('serving: ' + client_req.url);
-  if(client_req.url == "http://conntest.nintendowifi.net/")
-    sendConnTestPage(response);
-  //else if(client_req.url.indexOf("launcher"))
-  //{
-  //  sendLauncherPage(response);
-  //}
+const hostname = '127.0.0.1';
+const port = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) => {
+  console.log('serving: ' + req.url);
+  if(req.url == "http://conntest.nintendowifi.net/")
+    sendConnTestPage(res);
   else
   {
-    send404(response);
+    send404(res);
   }
-}).listen(port);
-console.log('Server running on port ' + port);
+});
 
+server.listen(port, hostname, () => {
+  console.log('Server running on port ' + port);
+});
 
-function sendLauncherPage(response){
-  response.writeHead(200, {
-  'Content-Type'	: 'text/html',
-  'connection'		: 'keep-alive'});
-  fs.readFile('./launcher.html',function(err,data){
-    response.end(data);
-  });
-  console.log('served launcher.html');
-}
-
-
-function sendConnTestPage(response){
-  response.writeHead(200, {
+function sendConnTestPage(res) {
+  res.writeHead(200, {
   'Content-Type'	: 'text/html',
   'connection'		: 'keep-alive',
   'Server'			: 'BigIP',
   'X-Organization'	: 'Nintendo'});
-  fs.readFile('./conntest.html',function(err,data){
-    response.end(data);
+  fs.readFile('./conntest.html',function(err,data) {
+    res.end(data);
   });
   console.log('served conntest.html');
 }
 
-function send404(response){
-  response.writeHead(404, {"Content-Type": "text/plain"});
-  response.write("404 Not Found\n");
-  response.end();
+function send404(res) {
+  res.writeHead(404, {"Content-Type": "text/plain"});
+  res.write("404 Not Found\n");
+  res.end();
   console.log('served 404.')
 }
