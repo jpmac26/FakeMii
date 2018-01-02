@@ -16,7 +16,7 @@ Any other page will send a 404 error.
 3. It's running!
 
 ###Set up the Nintendo 3DS
-1. Get your computer local IP adress. Select the one from the network your console is connecting to.
+1. Get your computer local IP address. Select the one from the network your console is connecting to.
   1. On Windows: Open a cmd.exe and type `ipconfig`
   2. On Linux: `ip addr show`
 2. Configure your console proxy
